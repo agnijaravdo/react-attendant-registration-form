@@ -1,0 +1,734 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders component correctly 1`] = `
+<div>
+  <div>
+    <hr />
+    <h1>
+      Attendant Registration Form
+    </h1>
+    <br />
+    <form
+      class="attendant-form"
+    >
+      <div>
+        <label
+          for="name"
+        >
+          Enter name:
+        </label>
+        <input
+          data-testid="name"
+          maxlength="50"
+          minlength="2"
+          name="name"
+          pattern="[A-Za-zÀ-ÖØ-öø-ÿ'\\\\-]+"
+          placeholder="Name"
+          required=""
+          type="text"
+          value=""
+        />
+      </div>
+      <br />
+      <div
+        class="input"
+      >
+        <label
+          for="lastName"
+        >
+          Enter last name:
+        </label>
+        <input
+          data-testid="last-name"
+          maxlength="50"
+          minlength="2"
+          name="lastName"
+          pattern="[A-Za-zÀ-ÖØ-öø-ÿ'\\\\-]+"
+          placeholder="Last Name"
+          required=""
+          type="text"
+          value=""
+        />
+      </div>
+      <br />
+      <div
+        class="input"
+      >
+        <label
+          for="jobTitle"
+        >
+          Select job title:
+        </label>
+        <select
+          data-testid="job-title"
+          name="jobTitle"
+          required=""
+        >
+          <option
+            style="text-align: center;"
+            value=""
+          >
+            Please select a job title ⬇️
+          </option>
+          <option
+            value="Account coordinator"
+          >
+            Account coordinator
+          </option>
+          <option
+            value="Actor"
+          >
+            Actor
+          </option>
+          <option
+            value="Actuary"
+          >
+            Actuary
+          </option>
+          <option
+            value="Admissions representative"
+          >
+            Admissions representative
+          </option>
+          <option
+            value="Aerospace engineer"
+          >
+            Aerospace engineer
+          </option>
+          <option
+            value="Agriculture teacher"
+          >
+            Agriculture teacher
+          </option>
+          <option
+            value="Animal control officer"
+          >
+            Animal control officer
+          </option>
+          <option
+            value="Animal geneticist"
+          >
+            Animal geneticist
+          </option>
+          <option
+            value="Animal nutritionist"
+          >
+            Animal nutritionist
+          </option>
+          <option
+            value="Animal shelter manager"
+          >
+            Animal shelter manager
+          </option>
+          <option
+            value="Animal sitter"
+          >
+            Animal sitter
+          </option>
+          <option
+            value="Aquatic ecologist"
+          >
+            Aquatic ecologist
+          </option>
+          <option
+            value="Architect"
+          >
+            Architect
+          </option>
+          <option
+            value="Art director"
+          >
+            Art director
+          </option>
+          <option
+            value="Assistant buyer"
+          >
+            Assistant buyer
+          </option>
+          <option
+            value="Assistant professor"
+          >
+            Assistant professor
+          </option>
+          <option
+            value="Bank teller"
+          >
+            Bank teller
+          </option>
+          <option
+            value="Barber"
+          >
+            Barber
+          </option>
+          <option
+            value="Beautician"
+          >
+            Beautician
+          </option>
+          <option
+            value="Beekeeper"
+          >
+            Beekeeper
+          </option>
+          <option
+            value="Biochemist"
+          >
+            Biochemist
+          </option>
+          <option
+            value="Biological engineer"
+          >
+            Biological engineer
+          </option>
+          <option
+            value="Biologist"
+          >
+            Biologist
+          </option>
+          <option
+            value="Breeder"
+          >
+            Breeder
+          </option>
+          <option
+            value="Budget analyst"
+          >
+            Budget analyst
+          </option>
+          <option
+            value="Business development manager"
+          >
+            Business development manager
+          </option>
+          <option
+            value="Business reporter"
+          >
+            Business reporter
+          </option>
+          <option
+            value="Business teacher"
+          >
+            Business teacher
+          </option>
+          <option
+            value="Call center agent"
+          >
+            Call center agent
+          </option>
+          <option
+            value="Cashier"
+          >
+            Cashier
+          </option>
+          <option
+            value="Chemical engineer"
+          >
+            Chemical engineer
+          </option>
+          <option
+            value="Civil engineer"
+          >
+            Civil engineer
+          </option>
+          <option
+            value="Client services coordinator"
+          >
+            Client services coordinator
+          </option>
+          <option
+            value="Client services manager"
+          >
+            Client services manager
+          </option>
+          <option
+            value="College professor"
+          >
+            College professor
+          </option>
+          <option
+            value="Compliance engineer"
+          >
+            Compliance engineer
+          </option>
+          <option
+            value="Concierge"
+          >
+            Concierge
+          </option>
+          <option
+            value="Conservationist"
+          >
+            Conservationist
+          </option>
+          <option
+            value="Cosmetology instructor"
+          >
+            Cosmetology instructor
+          </option>
+          <option
+            value="Cost estimator"
+          >
+            Cost estimator
+          </option>
+          <option
+            value="Credit analyst"
+          >
+            Credit analyst
+          </option>
+          <option
+            value="Customer care associate"
+          >
+            Customer care associate
+          </option>
+          <option
+            value="Customer service manager"
+          >
+            Customer service manager
+          </option>
+          <option
+            value="Dancer"
+          >
+            Dancer
+          </option>
+          <option
+            value="Editor"
+          >
+            Editor
+          </option>
+          <option
+            value="Electrical engineer"
+          >
+            Electrical engineer
+          </option>
+          <option
+            value="Electrologist"
+          >
+            Electrologist
+          </option>
+          <option
+            value="English teacher"
+          >
+            English teacher
+          </option>
+          <option
+            value="Environmental engineer"
+          >
+            Environmental engineer
+          </option>
+          <option
+            value="Esthetician"
+          >
+            Esthetician
+          </option>
+          <option
+            value="Farmer"
+          >
+            Farmer
+          </option>
+          <option
+            value="Fashion designer"
+          >
+            Fashion designer
+          </option>
+          <option
+            value="Fashion show stylist"
+          >
+            Fashion show stylist
+          </option>
+          <option
+            value="Financial adviser"
+          >
+            Financial adviser
+          </option>
+          <option
+            value="Financial auditor"
+          >
+            Financial auditor
+          </option>
+          <option
+            value="Financial manager"
+          >
+            Financial manager
+          </option>
+          <option
+            value="Financial planner"
+          >
+            Financial planner
+          </option>
+          <option
+            value="Financial services representative"
+          >
+            Financial services representative
+          </option>
+          <option
+            value="Food scientist"
+          >
+            Food scientist
+          </option>
+          <option
+            value="Foresters"
+          >
+            Foresters
+          </option>
+          <option
+            value="Front desk coordinator"
+          >
+            Front desk coordinator
+          </option>
+          <option
+            value="Geological engineer"
+          >
+            Geological engineer
+          </option>
+          <option
+            value="Graphic designer"
+          >
+            Graphic designer
+          </option>
+          <option
+            value="Groomer"
+          >
+            Groomer
+          </option>
+          <option
+            value="Guidance counselor"
+          >
+            Guidance counselor
+          </option>
+          <option
+            value="Hairdresser"
+          >
+            Hairdresser
+          </option>
+          <option
+            value="Help desk assistant"
+          >
+            Help desk assistant
+          </option>
+          <option
+            value="Horticulturist"
+          >
+            Horticulturist
+          </option>
+          <option
+            value="Illustrator"
+          >
+            Illustrator
+          </option>
+          <option
+            value="Instructional designer"
+          >
+            Instructional designer
+          </option>
+          <option
+            value="Investment banking analyst"
+          >
+            Investment banking analyst
+          </option>
+          <option
+            value="Kennel attendant"
+          >
+            Kennel attendant
+          </option>
+          <option
+            value="Librarian"
+          >
+            Librarian
+          </option>
+          <option
+            value="Loan officer"
+          >
+            Loan officer
+          </option>
+          <option
+            value="Makeup artist"
+          >
+            Makeup artist
+          </option>
+          <option
+            value="Marine engineer"
+          >
+            Marine engineer
+          </option>
+          <option
+            value="Math teacher"
+          >
+            Math teacher
+          </option>
+          <option
+            value="Mechanical engineer"
+          >
+            Mechanical engineer
+          </option>
+          <option
+            value="Message therapist"
+          >
+            Message therapist
+          </option>
+          <option
+            value="Multimedia animator"
+          >
+            Multimedia animator
+          </option>
+          <option
+            value="Nail technician"
+          >
+            Nail technician
+          </option>
+          <option
+            value="Nuclear engineer"
+          >
+            Nuclear engineer
+          </option>
+          <option
+            value="Office clerk"
+          >
+            Office clerk
+          </option>
+          <option
+            value="Office manager"
+          >
+            Office manager
+          </option>
+          <option
+            value="Painter"
+          >
+            Painter
+          </option>
+          <option
+            value="Pet walker"
+          >
+            Pet walker
+          </option>
+          <option
+            value="Petroleum engineer"
+          >
+            Petroleum engineer
+          </option>
+          <option
+            value="Plant biologist"
+          >
+            Plant biologist
+          </option>
+          <option
+            value="Plant nursery attendant"
+          >
+            Plant nursery attendant
+          </option>
+          <option
+            value="Principal"
+          >
+            Principal
+          </option>
+          <option
+            value="Producer"
+          >
+            Producer
+          </option>
+          <option
+            value="Product engineer"
+          >
+            Product engineer
+          </option>
+          <option
+            value="Project manager"
+          >
+            Project manager
+          </option>
+          <option
+            value="Public relations specialist"
+          >
+            Public relations specialist
+          </option>
+          <option
+            value="Retail sales associate"
+          >
+            Retail sales associate
+          </option>
+          <option
+            value="Safety engineer"
+          >
+            Safety engineer
+          </option>
+          <option
+            value="Sales manager"
+          >
+            Sales manager
+          </option>
+          <option
+            value="Salon manager"
+          >
+            Salon manager
+          </option>
+          <option
+            value="Science teacher"
+          >
+            Science teacher
+          </option>
+          <option
+            value="Senior process engineer"
+          >
+            Senior process engineer
+          </option>
+          <option
+            value="Service adviser"
+          >
+            Service adviser
+          </option>
+          <option
+            value="Singer"
+          >
+            Singer
+          </option>
+          <option
+            value="Skin care specialist"
+          >
+            Skin care specialist
+          </option>
+          <option
+            value="Soil and plant scientist"
+          >
+            Soil and plant scientist
+          </option>
+          <option
+            value="Spa manager"
+          >
+            Spa manager
+          </option>
+          <option
+            value="Substitute teacher"
+          >
+            Substitute teacher
+          </option>
+          <option
+            value="Superintendent"
+          >
+            Superintendent
+          </option>
+          <option
+            value="Tattoo artist"
+          >
+            Tattoo artist
+          </option>
+          <option
+            value="Technical support representative"
+          >
+            Technical support representative
+          </option>
+          <option
+            value="Test administrator"
+          >
+            Test administrator
+          </option>
+          <option
+            value="Test scorer"
+          >
+            Test scorer
+          </option>
+          <option
+            value="Tutor"
+          >
+            Tutor
+          </option>
+          <option
+            value="Veterinarian"
+          >
+            Veterinarian
+          </option>
+          <option
+            value="Veterinary assistant"
+          >
+            Veterinary assistant
+          </option>
+          <option
+            value="Veterinary ophthalmologist"
+          >
+            Veterinary ophthalmologist
+          </option>
+          <option
+            value="Veterinary pathologist"
+          >
+            Veterinary pathologist
+          </option>
+          <option
+            value="Vice principal"
+          >
+            Vice principal
+          </option>
+          <option
+            value="Virtual assistant"
+          >
+            Virtual assistant
+          </option>
+          <option
+            value="Web developer"
+          >
+            Web developer
+          </option>
+          <option
+            value="Wedding stylist"
+          >
+            Wedding stylist
+          </option>
+          <option
+            value="Wildlife biologist"
+          >
+            Wildlife biologist
+          </option>
+          <option
+            value="Wildlife inspector"
+          >
+            Wildlife inspector
+          </option>
+          <option
+            value="Wildlife rehabilitator"
+          >
+            Wildlife rehabilitator
+          </option>
+          <option
+            value="Writer"
+          >
+            Writer
+          </option>
+          <option
+            value="Zoologist"
+          >
+            Zoologist
+          </option>
+        </select>
+      </div>
+      <br />
+      <div
+        class="input"
+      >
+        <label
+          for="age"
+        >
+          Enter age:
+        </label>
+        <input
+          data-testid="age"
+          max="120"
+          min="15"
+          name="age"
+          placeholder="Age"
+          required=""
+          type="number"
+          value=""
+        />
+      </div>
+      <br />
+      <div
+        class="button"
+      >
+        <button
+          data-testid="submit"
+          type="submit"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+`;
