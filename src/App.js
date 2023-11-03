@@ -1,10 +1,12 @@
+import React from "react";
 import "./App.css";
+import AttendantForm from "./components/AttendantForm";
 
 function App() {
   return (
-    <div>
-      <h1 className="center-text">2023 React Fundamentals Workshop</h1>
-      <div>Add code here</div>
+    <div className="App">
+      <h1>2023 React Fundamentals Workshop</h1>
+      <AttendantForm />
     </div>
   );
 }
