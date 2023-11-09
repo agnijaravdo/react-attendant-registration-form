@@ -1,79 +1,103 @@
-import React, { useState, useEffect } from "react";
-import { getJobTitles, addAttendant, getAttendants } from "../api";
-import AttendantDisplay from "./AttendantDisplay";
+import React, { useState } from "react";
+import Attendant from "./Attendant";
+import ErrorMessages from "../constants/errorMessages";
 
-export default function AttendantForm() {
-  const [attendants, setAttendants] = useState([]);
+const AttendantForm = ({
+  isAttendantsLoading,
+  isJobTitlesLoading,
+  submitAttendant,
+  attendants,
+  jobTitles,
+  attendantsApiError,
+  jobTitlesApiError,
+}) => {
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [jobTitle, setJobTitle] = useState("");
   const [age, setAge] = useState("");
-  const [allJobTitles, setAllJobTitles] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [nameError, setNameError] = useState("");
+  const [lastNameError, setLastNameError] = useState("");
+  const [jobTitleError, setJobTitleError] = useState("");
+  const [ageError, setAgeError] = useState("");
 
-  async function submitHandler(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    const submittedData = {
-      name,
-      lastName,
-      jobTitle,
-      age,
-    };
-
-    try {
-      setIsLoading(true);
-      const { status } = await addAttendant(submittedData);
-      if (status === 200) {
-        const { status: attendancesStatus, data } = await getAttendants();
-        if (attendancesStatus === 200) {
-          setAttendants([...data].sort((a, b) => a.age - b.age));
-        }
-      }
-    } catch (e) {
-      console.error("failed to add attendant", e);
-    } finally {
-      clearForm();
-      setIsLoading(false);
-    }
+    await submitAttendant({ name, lastName, jobTitle, age });
+    clearForm();
   }
 
-  function clearForm() {
+  const clearForm = () => {
     [setName, setLastName, setJobTitle, setAge].forEach((setter) => setter(""));
-  }
+  };
 
-  useEffect(() => {
-    setIsLoading(true);
+  const renderAttendants = () =>
+    attendants.map((attendant, index) => (
+      <Attendant
+        key={`attendant-${index}`}
+        attendant={attendant}
+      />
+    ));
 
-    Promise.all([getJobTitles(), getAttendants()])
-      .then(([jobTitles, initialAttendants]) => {
-        if (jobTitles.status === 200) {
-          setAllJobTitles([...jobTitles.data].sort());
-        }
-        if (initialAttendants.status === 200) {
-          setAttendants(
-            [...initialAttendants.data].sort((a, b) => a.age - b.age)
-          );
-        }
-      })
-      .catch((e) => {
-        console.error("failed to get api response", e);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
+  const renderJobTitles = () =>
+    jobTitles.map((jobTitle, i) => (
+      <option
+        key={`${jobTitle}${i}`}
+        value={jobTitle}
+      >
+        {jobTitle}
+      </option>
+    ));
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    switch (name) {
+      case "name":
+        setName(value);
+        break;
+      case "lastName":
+        setLastName(value);
+        break;
+      case "jobTitle":
+        setJobTitle(value);
+        break;
+      case "age":
+        setAge(value);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleInvalid = (e, errorMessage, setError) => {
+    setError(errorMessage);
+    e.target.setCustomValidity(errorMessage);
+  };
+
+  const handleBlur = (e) => {
+    e.target.reportValidity();
+  };
+
+  const isSubmitButtonDisabled =
+    isAttendantsLoading ||
+    isJobTitlesLoading ||
+    !!nameError ||
+    !!lastNameError ||
+    !!jobTitleError ||
+    !!ageError;
 
   return (
     <div>
       <hr />
       <h1>Attendant Registration Form</h1>
       <br />
-      <form
-        className="attendant-form"
-        onSubmit={submitHandler}
-      >
+      <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="name">Enter name:</label>
+          <label
+            htmlFor="name"
+            className="form-label"
+          >
+            Enter name:
+          </label>
           <input
             type="text"
             minLength="2"
@@ -84,18 +108,26 @@ export default function AttendantForm() {
             data-testid="name"
             value={name}
             required
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
+            onChange={handleChange}
             onInvalid={(e) =>
-              e.target.setCustomValidity("Please enter a valid name")
+              handleInvalid(e, ErrorMessages.INVALID_NAME, setNameError)
             }
-            onInput={(e) => e.target.setCustomValidity("")}
+            onInput={(e) => {
+              e.target.setCustomValidity("");
+              setNameError("");
+              handleChange(e);
+            }}
+            onBlur={handleBlur}
           />
         </div>
         <br />
         <div className="input">
-          <label htmlFor="lastName">Enter last name:</label>
+          <label
+            htmlFor="lastName"
+            className="form-label"
+          >
+            Enter last name:
+          </label>
           <input
             type="text"
             minLength="2"
@@ -106,50 +138,68 @@ export default function AttendantForm() {
             data-testid="last-name"
             value={lastName}
             required
-            onChange={(e) => {
-              setLastName(e.target.value);
-            }}
+            onChange={handleChange}
             onInvalid={(e) =>
-              e.target.setCustomValidity("Please enter a valid last name")
+              handleInvalid(
+                e,
+                ErrorMessages.INVALID_LAST_NAME,
+                setLastNameError
+              )
             }
-            onInput={(e) => e.target.setCustomValidity("")}
+            onInput={(e) => {
+              e.target.setCustomValidity("");
+              setLastNameError("");
+              handleChange(e);
+            }}
+            onBlur={handleBlur}
           />
         </div>
         <br />
         <div className="input">
-          <label htmlFor="jobTitle">Select job title:</label>
-          <select
-            name="jobTitle"
-            data-testid="job-title"
-            required
-            value={jobTitle}
-            onChange={(e) => setJobTitle(e.target.value)}
-            onInput={(e) => e.target.setCustomValidity("")}
-            onInvalid={(e) =>
-              e.target.setCustomValidity("Please select a job title")
-            }
+          <label
+            htmlFor="jobTitle"
+            className="form-label"
           >
-            <option
-              value=""
-              style={{ textAlign: "center" }}
+            Select job title:
+          </label>
+          {jobTitlesApiError ? (
+            <div>{jobTitlesApiError}</div>
+          ) : isJobTitlesLoading ? (
+            <div>Loading job titles... 🔄</div>
+          ) : (
+            <select
+              name="jobTitle"
+              data-testid="job-title"
+              required
+              value={jobTitle}
+              onChange={handleChange}
+              onInvalid={(e) =>
+                handleInvalid(
+                  e,
+                  ErrorMessages.INVALID_JOB_TITLE,
+                  setJobTitleError
+                )
+              }
+              onInput={(e) => {
+                e.target.setCustomValidity("");
+                setJobTitleError("");
+                handleChange(e);
+              }}
+              onBlur={handleBlur}
             >
-              {isLoading
-                ? "Loading job titles... 🔄"
-                : "Please select a job title ⬇️"}
-            </option>
-            {allJobTitles.map((jobTitle) => (
-              <option
-                key={jobTitle}
-                value={jobTitle}
-              >
-                {jobTitle}
-              </option>
-            ))}
-          </select>
+              (<option value="">Please select a job title ⬇️</option>)
+              {renderJobTitles()}
+            </select>
+          )}
         </div>
         <br />
         <div className="input">
-          <label htmlFor="age">Enter age:</label>
+          <label
+            htmlFor="age"
+            className="form-label"
+          >
+            Enter age:
+          </label>
           <input
             type="number"
             min="15"
@@ -159,13 +209,16 @@ export default function AttendantForm() {
             data-testid="age"
             value={age}
             required
-            onChange={(e) => {
-              setAge(e.target.value);
-            }}
+            onChange={handleChange}
             onInvalid={(e) =>
-              e.target.setCustomValidity("Age range must be 15-120")
+              handleInvalid(e, ErrorMessages.INVALID_AGE, setAgeError)
             }
-            onInput={(e) => e.target.setCustomValidity("")}
+            onInput={(e) => {
+              e.target.setCustomValidity("");
+              setAgeError("");
+              handleChange(e);
+            }}
+            onBlur={handleBlur}
           />
         </div>
         <br />
@@ -173,19 +226,21 @@ export default function AttendantForm() {
           <button
             type="submit"
             data-testid="submit"
-            disabled={isLoading}
+            disabled={isSubmitButtonDisabled}
           >
             Submit
           </button>
-          {isLoading && <div>Loading...</div>}
+          {isAttendantsLoading && <div>Loading...</div>}
         </div>
       </form>
-      {attendants.map((e) => (
-        <AttendantDisplay
-          key={`${e.name}${e.lastName}${e.jobTitle}${e.age}`}
-          attendant={e}
-        />
-      ))}
+      {attendantsApiError && <div>{attendantsApiError}</div>}
+      {!attendantsApiError && renderAttendants()}
     </div>
   );
-}
+};
+
+export default AttendantForm;
+
+//TODO:
+//consider not using HTML custom validation, but instead creating validation methods for each input
+//unit tests

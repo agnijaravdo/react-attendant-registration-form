@@ -1,12 +1,12 @@
-.App {
+.center-text {
   text-align: center;
 }
-label {
+.form-label {
   display: block;
   text-align: center;
 }
 
-.attendantsDisplay span {
+.attendants-info {
   color: green;
   font-weight: bold;
 }

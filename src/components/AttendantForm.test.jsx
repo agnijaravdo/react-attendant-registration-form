@@ -1,14 +1,17 @@
 import AttendantForm from "./AttendantForm";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render } from "@testing-library/react";
 
 it("renders component correctly", async () => {
-  const { container } = render(<AttendantForm />);
-  await waitFor(
-    () => {
-      expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
-    },
-    { timeout: 3000 }
-  );
+  const props = {
+    isAttendantsLoading: false,
+    isJobTitlesLoading: false,
+    submitAttendant: jest.fn(),
+    attendants: [],
+    jobTitles: ["Accountant", "Engineer", "Lawyer", "Teacher"],
+    attendantsError: null,
+    jobTitlesApiError: null,
+  };
+  const { container } = render(<AttendantForm {...props} />);
   expect(container).toMatchSnapshot();
 });
 
