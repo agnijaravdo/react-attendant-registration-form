@@ -53,28 +53,81 @@ const AttendantForm = ({
     switch (name) {
       case "name":
         setName(value);
+        validateNameInput(value);
         break;
       case "lastName":
         setLastName(value);
+        validateLastNameInput(value);
         break;
       case "jobTitle":
         setJobTitle(value);
+        validateJobTitleSelection(value);
         break;
       case "age":
         setAge(value);
+        validateAgeInput(value);
         break;
       default:
         break;
     }
   };
 
-  const handleInvalid = (e, errorMessage, setError) => {
-    setError(errorMessage);
-    e.target.setCustomValidity(errorMessage);
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    switch (name) {
+      case "name":
+        validateNameInput(value);
+        break;
+      case "lastName":
+        validateLastNameInput(value);
+        break;
+      case "jobTitle":
+        validateJobTitleSelection(value);
+        break;
+      case "age":
+        validateAgeInput(value);
+        break;
+      default:
+        break;
+    }
   };
 
-  const handleBlur = (e) => {
-    e.target.reportValidity();
+  const validateNameInput = (value) => {
+    const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ'\\-]{2,50}$/;
+
+    if (!value.match(nameRegex)) {
+      setNameError(ErrorMessages.INVALID_NAME);
+    } else {
+      setNameError("");
+    }
+  };
+
+  const validateLastNameInput = (value) => {
+    const lastNameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ'\\-]{2,50}$/;
+
+    if (!value.match(lastNameRegex)) {
+      setLastNameError(ErrorMessages.INVALID_LAST_NAME);
+    } else {
+      setLastNameError("");
+    }
+  };
+
+  const validateJobTitleSelection = (value) => {
+    if (!value) {
+      setJobTitleError(ErrorMessages.INVALID_JOB_TITLE);
+    } else {
+      setJobTitleError("");
+    }
+  };
+
+  const validateAgeInput = (value) => {
+    const ageRegex = /^(1[5-9]|[2-9]\d|1[01]\d|120)$/;
+
+    if (!value.match(ageRegex)) {
+      setAgeError(ErrorMessages.INVALID_AGE);
+    } else {
+      setAgeError("");
+    }
   };
 
   const isSubmitButtonDisabled =
@@ -83,7 +136,11 @@ const AttendantForm = ({
     !!nameError ||
     !!lastNameError ||
     !!jobTitleError ||
-    !!ageError;
+    !!ageError ||
+    !name ||
+    !lastName ||
+    !jobTitle ||
+    !age;
 
   return (
     <div>
@@ -100,26 +157,15 @@ const AttendantForm = ({
           </label>
           <input
             type="text"
-            minLength="2"
-            maxLength="50"
-            pattern="[A-Za-zÀ-ÖØ-öø-ÿ'\-]+"
             name="name"
             placeholder="Name"
             data-testid="name"
             value={name}
-            required
             onChange={handleChange}
-            onInvalid={(e) =>
-              handleInvalid(e, ErrorMessages.INVALID_NAME, setNameError)
-            }
-            onInput={(e) => {
-              e.target.setCustomValidity("");
-              setNameError("");
-              handleChange(e);
-            }}
             onBlur={handleBlur}
           />
         </div>
+        {nameError && <div>{nameError}</div>}
         <br />
         <div className="input">
           <label
@@ -130,30 +176,15 @@ const AttendantForm = ({
           </label>
           <input
             type="text"
-            minLength="2"
-            maxLength="50"
-            pattern="[A-Za-zÀ-ÖØ-öø-ÿ'\-]+"
             name="lastName"
             placeholder="Last Name"
             data-testid="last-name"
             value={lastName}
-            required
             onChange={handleChange}
-            onInvalid={(e) =>
-              handleInvalid(
-                e,
-                ErrorMessages.INVALID_LAST_NAME,
-                setLastNameError
-              )
-            }
-            onInput={(e) => {
-              e.target.setCustomValidity("");
-              setLastNameError("");
-              handleChange(e);
-            }}
             onBlur={handleBlur}
           />
         </div>
+        {lastNameError && <div>{lastNameError}</div>}
         <br />
         <div className="input">
           <label
@@ -170,28 +201,22 @@ const AttendantForm = ({
             <select
               name="jobTitle"
               data-testid="job-title"
-              required
               value={jobTitle}
               onChange={handleChange}
-              onInvalid={(e) =>
-                handleInvalid(
-                  e,
-                  ErrorMessages.INVALID_JOB_TITLE,
-                  setJobTitleError
-                )
-              }
-              onInput={(e) => {
-                e.target.setCustomValidity("");
-                setJobTitleError("");
-                handleChange(e);
-              }}
               onBlur={handleBlur}
             >
-              (<option value="">Please select a job title ⬇️</option>)
-              {renderJobTitles()}
+              (
+              <option
+                value=""
+                disabled
+              >
+                Please select a job title ⬇️
+              </option>
+              ){renderJobTitles()}
             </select>
           )}
         </div>
+        {jobTitleError && <div>{jobTitleError}</div>}
         <br />
         <div className="input">
           <label
@@ -202,25 +227,15 @@ const AttendantForm = ({
           </label>
           <input
             type="number"
-            min="15"
-            max="120"
             name="age"
             placeholder="Age"
             data-testid="age"
             value={age}
-            required
             onChange={handleChange}
-            onInvalid={(e) =>
-              handleInvalid(e, ErrorMessages.INVALID_AGE, setAgeError)
-            }
-            onInput={(e) => {
-              e.target.setCustomValidity("");
-              setAgeError("");
-              handleChange(e);
-            }}
             onBlur={handleBlur}
           />
         </div>
+        {ageError && <div>{ageError}</div>}
         <br />
         <div className="button">
           <button
@@ -240,7 +255,3 @@ const AttendantForm = ({
 };
 
 export default AttendantForm;
-
-//TODO:
-//consider not using HTML custom validation, but instead creating validation methods for each input
-//unit tests
