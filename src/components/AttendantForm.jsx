@@ -144,18 +144,20 @@ const AttendantForm = ({
 
   return (
     <div>
-      <hr />
-      <h1>Attendant Registration Form</h1>
-      <br />
-      <form onSubmit={handleSubmit}>
+      <h2>Attendant Registration Form</h2>
+      <form
+        className="form-container"
+        onSubmit={handleSubmit}
+      >
         <div>
           <label
             htmlFor="name"
             className="form-label"
           >
-            Name:
+            Name
           </label>
           <input
+            className="input-box"
             type="text"
             name="name"
             placeholder="Name"
@@ -167,16 +169,24 @@ const AttendantForm = ({
             onBlur={handleBlur}
           />
         </div>
-        {nameError && <div id="nameError">{nameError}</div>}
+        {nameError && (
+          <div
+            className="error-label"
+            id="nameError"
+          >
+            {nameError}
+          </div>
+        )}
         <br />
-        <div className="input">
+        <div>
           <label
             htmlFor="lastName"
             className="form-label"
           >
-            Last name:
+            Last name
           </label>
           <input
+            className="input-box"
             type="text"
             name="lastName"
             placeholder="Last Name"
@@ -188,21 +198,34 @@ const AttendantForm = ({
             onBlur={handleBlur}
           />
         </div>
-        {lastNameError && <div id="lastNameError">{lastNameError}</div>}
+        {lastNameError && (
+          <div
+            className="error-label"
+            id="lastNameError"
+          >
+            {lastNameError}
+          </div>
+        )}
         <br />
-        <div className="input">
+        <div>
           <label
             htmlFor="jobTitle"
             className="form-label"
           >
-            Job title:
+            Job title
           </label>
           {jobTitlesApiError ? (
             <div aria-live="assertive">{jobTitlesApiError}</div>
           ) : isJobTitlesLoading ? (
-            <div aria-live="polite">Loading job titles... 🔄</div>
+            <div
+              className="loading-label"
+              aria-live="polite"
+            >
+              Loading job titles... 🔄
+            </div>
           ) : (
             <select
+              className="input-box"
               name="jobTitle"
               aria-required="true"
               aria-describedby="jobTitleError"
@@ -222,16 +245,24 @@ const AttendantForm = ({
             </select>
           )}
         </div>
-        {jobTitleError && <div id="jobTitleError">{jobTitleError}</div>}
+        {jobTitleError && (
+          <div
+            className="error-label"
+            id="jobTitleError"
+          >
+            {jobTitleError}
+          </div>
+        )}
         <br />
         <div className="input">
           <label
             htmlFor="age"
             className="form-label"
           >
-            Age:
+            Age
           </label>
           <input
+            className="input-box"
             type="number"
             name="age"
             placeholder="Age"
@@ -243,21 +274,41 @@ const AttendantForm = ({
             onBlur={handleBlur}
           />
         </div>
-        {ageError && <div id="ageError">{ageError}</div>}
+        {ageError && (
+          <div
+            className="error-label"
+            id="ageError"
+          >
+            {ageError}
+          </div>
+        )}
         <br />
-        <div className="button">
+        <div>
           <button
+            className="submit-button"
             type="submit"
             data-testid="submit"
             disabled={isSubmitButtonDisabled}
           >
             Submit
           </button>
-          {isAttendantsLoading && <div aria-live="polite">Loading...</div>}
         </div>
       </form>
+      {isAttendantsLoading && (
+        <div
+          className="loading-label"
+          aria-live="polite"
+        >
+          Loading...
+        </div>
+      )}
       {attendantsApiError && (
-        <div aria-live="assertive">{attendantsApiError}</div>
+        <div
+          className="error-label"
+          aria-live="assertive"
+        >
+          {attendantsApiError}
+        </div>
       )}
       {!attendantsApiError && renderAttendants()}
     </div>
