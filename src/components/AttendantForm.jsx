@@ -153,53 +153,59 @@ const AttendantForm = ({
             htmlFor="name"
             className="form-label"
           >
-            Enter name:
+            Name:
           </label>
           <input
             type="text"
             name="name"
             placeholder="Name"
+            aria-required="true"
+            aria-describedby="nameError"
             data-testid="name"
             value={name}
             onChange={handleChange}
             onBlur={handleBlur}
           />
         </div>
-        {nameError && <div>{nameError}</div>}
+        {nameError && <div id="nameError">{nameError}</div>}
         <br />
         <div className="input">
           <label
             htmlFor="lastName"
             className="form-label"
           >
-            Enter last name:
+            Last name:
           </label>
           <input
             type="text"
             name="lastName"
             placeholder="Last Name"
+            aria-required="true"
+            aria-describedby="lastNameError"
             data-testid="last-name"
             value={lastName}
             onChange={handleChange}
             onBlur={handleBlur}
           />
         </div>
-        {lastNameError && <div>{lastNameError}</div>}
+        {lastNameError && <div id="lastNameError">{lastNameError}</div>}
         <br />
         <div className="input">
           <label
             htmlFor="jobTitle"
             className="form-label"
           >
-            Select job title:
+            Job title:
           </label>
           {jobTitlesApiError ? (
-            <div>{jobTitlesApiError}</div>
+            <div aria-live="assertive">{jobTitlesApiError}</div>
           ) : isJobTitlesLoading ? (
-            <div>Loading job titles... 🔄</div>
+            <div aria-live="polite">Loading job titles... 🔄</div>
           ) : (
             <select
               name="jobTitle"
+              aria-required="true"
+              aria-describedby="jobTitleError"
               data-testid="job-title"
               value={jobTitle}
               onChange={handleChange}
@@ -216,26 +222,28 @@ const AttendantForm = ({
             </select>
           )}
         </div>
-        {jobTitleError && <div>{jobTitleError}</div>}
+        {jobTitleError && <div id="jobTitleError">{jobTitleError}</div>}
         <br />
         <div className="input">
           <label
             htmlFor="age"
             className="form-label"
           >
-            Enter age:
+            Age:
           </label>
           <input
             type="number"
             name="age"
             placeholder="Age"
+            aria-required="true"
+            aria-describedby="ageError"
             data-testid="age"
             value={age}
             onChange={handleChange}
             onBlur={handleBlur}
           />
         </div>
-        {ageError && <div>{ageError}</div>}
+        {ageError && <div id="ageError">{ageError}</div>}
         <br />
         <div className="button">
           <button
@@ -245,10 +253,12 @@ const AttendantForm = ({
           >
             Submit
           </button>
-          {isAttendantsLoading && <div>Loading...</div>}
+          {isAttendantsLoading && <div aria-live="polite">Loading...</div>}
         </div>
       </form>
-      {attendantsApiError && <div>{attendantsApiError}</div>}
+      {attendantsApiError && (
+        <div aria-live="assertive">{attendantsApiError}</div>
+      )}
       {!attendantsApiError && renderAttendants()}
     </div>
   );
