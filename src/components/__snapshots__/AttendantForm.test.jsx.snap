@@ -1,72 +1,69 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders component correctly 1`] = `
+exports[`<AttendantForm /> renders correctly on successful initial load 1`] = `
 <div>
   <div>
-    <hr />
-    <h1>
+    <h2>
       Attendant Registration Form
-    </h1>
-    <br />
-    <form>
+    </h2>
+    <form
+      class="form-container"
+    >
       <div>
         <label
           class="form-label"
           for="name"
         >
-          Enter name:
+          Name
         </label>
         <input
+          aria-describedby="nameError"
+          aria-required="true"
+          class="input-box"
           data-testid="name"
-          maxlength="50"
-          minlength="2"
           name="name"
-          pattern="[A-Za-zÀ-ÖØ-öø-ÿ'\\\\-]+"
           placeholder="Name"
-          required=""
           type="text"
           value=""
         />
       </div>
       <br />
-      <div
-        class="input"
-      >
+      <div>
         <label
           class="form-label"
           for="lastName"
         >
-          Enter last name:
+          Last name
         </label>
         <input
+          aria-describedby="lastNameError"
+          aria-required="true"
+          class="input-box"
           data-testid="last-name"
-          maxlength="50"
-          minlength="2"
           name="lastName"
-          pattern="[A-Za-zÀ-ÖØ-öø-ÿ'\\\\-]+"
           placeholder="Last Name"
-          required=""
           type="text"
           value=""
         />
       </div>
       <br />
-      <div
-        class="input"
-      >
+      <div>
         <label
           class="form-label"
           for="jobTitle"
         >
-          Select job title:
+          Job title
         </label>
         <select
+          aria-describedby="jobTitleError"
+          aria-required="true"
+          class="input-box"
           data-testid="job-title"
           name="jobTitle"
-          required=""
         >
           (
           <option
+            disabled=""
             value=""
           >
             Please select a job title ⬇️
@@ -102,25 +99,25 @@ exports[`renders component correctly 1`] = `
           class="form-label"
           for="age"
         >
-          Enter age:
+          Age
         </label>
         <input
+          aria-describedby="ageError"
+          aria-required="true"
+          class="input-box"
           data-testid="age"
-          max="120"
-          min="15"
           name="age"
           placeholder="Age"
-          required=""
           type="number"
           value=""
         />
       </div>
       <br />
-      <div
-        class="button"
-      >
+      <div>
         <button
+          class="submit-button"
           data-testid="submit"
+          disabled=""
           type="submit"
         >
           Submit

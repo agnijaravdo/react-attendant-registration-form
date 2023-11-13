@@ -220,6 +220,7 @@ const AttendantForm = ({
             <div
               className="loading-label"
               aria-live="polite"
+              data-testid="job-titles-loader"
             >
               Loading job titles... 🔄
             </div>
@@ -298,6 +299,7 @@ const AttendantForm = ({
         <div
           className="loading-label"
           aria-live="polite"
+          data-testid="attendants-loader"
         >
           Loading...
         </div>

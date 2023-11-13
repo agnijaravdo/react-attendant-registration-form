@@ -82,7 +82,7 @@ function App() {
         submitAttendant={submitAttendant}
         attendants={attendants}
         jobTitles={jobTitles}
-        attendantsError={attendantsApiError}
+        attendantsApiError={attendantsApiError}
         jobTitlesApiError={jobTitlesApiError}
       />
     </div>
