@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Attendant /> renders correctly on successful initial load 1`] = `
+<div>
+  <div>
+    <br />
+    Name: 
+    <span
+      class="attendants-info"
+    >
+      John
+       
+    </span>
+    Last Name: 
+    <span
+      class="attendants-info"
+    >
+      Doe
+       
+    </span>
+    Job Title: 
+    <span
+      class="attendants-info"
+    >
+      Engineer
+       
+    </span>
+    Age: 
+    <span
+      class="attendants-info"
+    >
+      40
+       
+    </span>
+    <br />
+  </div>
+</div>
+`;

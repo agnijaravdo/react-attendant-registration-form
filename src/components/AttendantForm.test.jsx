@@ -3,7 +3,6 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ErrorMessages from "../constants/errorMessages";
 
-let props;
 const jobTitles = ["Accountant", "Engineer", "Lawyer", "Teacher"];
 
 const fillAndSubmitForm = async () => {
@@ -14,6 +13,8 @@ const fillAndSubmitForm = async () => {
   userEvent.click(screen.getByTestId("submit"));
 };
 describe("<AttendantForm />", () => {
+  let props;
+
   beforeEach(() => {
     props = {
       isAttendantsLoading: false,
@@ -111,7 +112,7 @@ describe("<AttendantForm />", () => {
   it("shows validation error for invalid last name input", async () => {
     render(<AttendantForm {...props} />);
 
-    userEvent.type(screen.getByTestId("last-name"), "John888");
+    userEvent.type(screen.getByTestId("last-name"), "Doe888");
     expect(
       screen.getByText(ErrorMessages.INVALID_LAST_NAME)
     ).toBeInTheDocument();
