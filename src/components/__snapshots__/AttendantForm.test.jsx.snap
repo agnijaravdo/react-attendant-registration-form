@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<AttendantForm /> renders correctly on successful initial load 1`] = `
+exports[`<AttendantForm /> renders correctly when data is loaded 1`] = `
 <div>
   <div>
     <h2>

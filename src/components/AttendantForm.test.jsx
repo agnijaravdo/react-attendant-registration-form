@@ -12,6 +12,7 @@ const fillAndSubmitForm = async () => {
   userEvent.type(screen.getByTestId("age"), "40");
   userEvent.click(screen.getByTestId("submit"));
 };
+
 describe("<AttendantForm />", () => {
   let props;
 
@@ -20,32 +21,27 @@ describe("<AttendantForm />", () => {
       isAttendantsLoading: false,
       isJobTitlesLoading: false,
       submitAttendant: jest.fn(),
-      attendants: [],
       jobTitles: jobTitles,
-      attendantsApiError: null,
       jobTitlesApiError: null,
     };
   });
 
-  it("renders correctly on successful initial load", async () => {
+  it("renders correctly when data is loaded", async () => {
     const { container } = render(<AttendantForm {...props} />);
 
     expect(screen.queryByTestId("job-titles-loader")).not.toBeInTheDocument();
-    expect(screen.queryByTestId("attendants-loader")).not.toBeInTheDocument();
     expect(container).toMatchSnapshot();
   });
 
-  it("renders attendants and job title loaders", async () => {
+  it("renders job title loader", async () => {
     render(
       <AttendantForm
         {...props}
-        isAttendantsLoading={true}
         isJobTitlesLoading={true}
       />
     );
 
     expect(screen.getByTestId("job-titles-loader")).toBeInTheDocument();
-    expect(screen.getByTestId("attendants-loader")).toBeInTheDocument();
   });
 
   it("renders error message when get job titles API call fails", async () => {
@@ -68,32 +64,16 @@ describe("<AttendantForm />", () => {
         jobTitlesApiError={[ErrorMessages.FAILED_TO_GET_JOB_TITLES]}
       />
     );
+
     expect(screen.queryByTestId("job-title")).not.toBeInTheDocument();
   });
 
-  it("renders error message when get attendants API call fails", async () => {
-    render(
-      <AttendantForm
-        {...props}
-        attendantsApiError={[ErrorMessages.FAILED_TO_GET_ATTENDANTS]}
-      />
-    );
-
-    fillAndSubmitForm();
-
-    await waitFor(async () => {
-      expect(
-        screen.getByText(ErrorMessages.FAILED_TO_GET_ATTENDANTS)
-      ).toBeInTheDocument();
-    });
-  });
-
-  it("clears all fields and disables button on submit button click", async () => {
+  it("clears all fields and disables button when clicking on submit button", async () => {
     render(<AttendantForm {...props} />);
 
     fillAndSubmitForm();
     await waitFor(async () => {
-      expect(screen.getByTestId("name")).toHaveValue("");
+      expect(await screen.findByTestId("name")).toHaveValue("");
     });
     expect(screen.getByTestId("last-name")).toHaveValue("");
     expect(screen.getByTestId("job-title")).toHaveValue("");
@@ -112,14 +92,14 @@ describe("<AttendantForm />", () => {
   it("shows validation error for invalid last name input", async () => {
     render(<AttendantForm {...props} />);
 
-    userEvent.type(screen.getByTestId("last-name"), "Doe888");
+    userEvent.type(screen.getByTestId("last-name"), "D");
     expect(
       screen.getByText(ErrorMessages.INVALID_LAST_NAME)
     ).toBeInTheDocument();
     expect(screen.getByTestId("submit")).toBeDisabled();
   });
 
-  it("shows validation error for empty job title on outside click", async () => {
+  it("shows validation error for empty job title when clicking outside", async () => {
     render(<AttendantForm {...props} />);
 
     userEvent.click(screen.getByTestId("job-title"));
@@ -144,7 +124,7 @@ describe("<AttendantForm />", () => {
     expect(screen.getByTestId("submit")).toBeDisabled();
   });
 
-  it("shows validation for empty job title on outside click", async () => {
+  it("shows validation for empty job title when clicking outside", async () => {
     render(<AttendantForm {...props} />);
 
     userEvent.click(screen.getByTestId("age"));

@@ -1,42 +1,29 @@
 import React, { useState } from "react";
-import Attendant from "./Attendant";
+import { validateInputs } from "../utils/attendantFormInputValidations";
 import ErrorMessages from "../constants/errorMessages";
 
 const AttendantForm = ({
   isAttendantsLoading,
   isJobTitlesLoading,
   submitAttendant,
-  attendants,
   jobTitles,
-  attendantsApiError,
   jobTitlesApiError,
 }) => {
-  const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [jobTitle, setJobTitle] = useState("");
-  const [age, setAge] = useState("");
-  const [nameError, setNameError] = useState("");
-  const [lastNameError, setLastNameError] = useState("");
-  const [jobTitleError, setJobTitleError] = useState("");
-  const [ageError, setAgeError] = useState("");
+  
+  const [formInputs, setFormInputs] = useState({ name: "", lastName: "", jobTitle: "", age: "" });
+  const { name, lastName, jobTitle, age } = formInputs;
+  const [formErrors, setFormErrors] = useState({ nameError: "", lastNameError: "", jobTitleError: "", ageError: "" });
+  const { nameError, lastNameError, jobTitleError, ageError } = formErrors;
 
   async function handleSubmit(e) {
     e.preventDefault();
-    await submitAttendant({ name, lastName, jobTitle, age });
+    await submitAttendant({ ...formInputs });
     clearForm();
   }
 
   const clearForm = () => {
-    [setName, setLastName, setJobTitle, setAge].forEach((setter) => setter(""));
-  };
-
-  const renderAttendants = () =>
-    attendants.map((attendant, index) => (
-      <Attendant
-        key={`attendant-${index}`}
-        attendant={attendant}
-      />
-    ));
+    setFormInputs({ name: "", lastName: "", jobTitle: "", age: "" });
+  }
 
   const renderJobTitles = () =>
     jobTitles.map((jobTitle, i) => (
@@ -48,85 +35,69 @@ const AttendantForm = ({
       </option>
     ));
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleValidationError = (name) => {
     switch (name) {
       case "name":
-        setName(value);
-        validateNameInput(value);
+        setFormErrors({ ...formErrors, nameError: ErrorMessages.INVALID_NAME });
         break;
       case "lastName":
-        setLastName(value);
-        validateLastNameInput(value);
+        setFormErrors({ ...formErrors, lastNameError: ErrorMessages.INVALID_LAST_NAME });
         break;
       case "jobTitle":
-        setJobTitle(value);
-        validateJobTitleSelection(value);
+        setFormErrors({ ...formErrors, jobTitleError: ErrorMessages.INVALID_JOB_TITLE });
         break;
       case "age":
-        setAge(value);
-        validateAgeInput(value);
+        setFormErrors({ ...formErrors, ageError: ErrorMessages.INVALID_AGE });
         break;
       default:
-        break;
+        return;
     }
-  };
+  }
+
+  const handleNameChange = (e) => {
+    const { value } = e.target;
+    setFormInputs({ ...formInputs, name: value });
+    if (!validateInputs({name: "name", value})) {
+      handleValidationError("name");
+    } else {
+      setFormErrors({ ...formErrors, nameError: "" });
+    }
+  }
+
+  const handleLastNameChange = (e) => {
+    const { value } = e.target;
+    setFormInputs({ ...formInputs, lastName: value });
+    if (!validateInputs({name: "lastName", value})) {
+      handleValidationError("lastName");
+    } else {
+      setFormErrors({ ...formErrors, lastNameError: "" });
+    }
+  }
+
+  const handleJobTitleChange = (e) => {
+    const { value } = e.target;
+    setFormInputs({ ...formInputs, jobTitle: value });
+    if (!validateInputs({name: "jobTitle", value})) {
+      handleValidationError("jobTitle");
+    } else {
+      setFormErrors({ ...formErrors, jobTitleError: "" });
+    }
+  }
+
+  const handleAgeChange = (e) => {
+    const { value } = e.target;
+    setFormInputs({ ...formInputs, age: value });
+    if (!validateInputs({name: "age", value})) {
+      handleValidationError("age");
+    } else {
+      setFormErrors({ ...formErrors, ageError: "" });
+    }
+  }
 
   const handleBlur = (e) => {
     const { name, value } = e.target;
-    switch (name) {
-      case "name":
-        validateNameInput(value);
-        break;
-      case "lastName":
-        validateLastNameInput(value);
-        break;
-      case "jobTitle":
-        validateJobTitleSelection(value);
-        break;
-      case "age":
-        validateAgeInput(value);
-        break;
-      default:
-        break;
-    }
-  };
-
-  const validateNameInput = (value) => {
-    const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ'\\-]{2,50}$/;
-
-    if (!value.match(nameRegex)) {
-      setNameError(ErrorMessages.INVALID_NAME);
-    } else {
-      setNameError("");
-    }
-  };
-
-  const validateLastNameInput = (value) => {
-    const lastNameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ'\\-]{2,50}$/;
-
-    if (!value.match(lastNameRegex)) {
-      setLastNameError(ErrorMessages.INVALID_LAST_NAME);
-    } else {
-      setLastNameError("");
-    }
-  };
-
-  const validateJobTitleSelection = (value) => {
-    if (!value) {
-      setJobTitleError(ErrorMessages.INVALID_JOB_TITLE);
-    } else {
-      setJobTitleError("");
-    }
-  };
-
-  const validateAgeInput = (value) => {
-    const ageRegex = /^(1[5-9]|[2-9]\d|1[01]\d|120)$/;
-
-    if (!value.match(ageRegex)) {
-      setAgeError(ErrorMessages.INVALID_AGE);
-    } else {
-      setAgeError("");
+    if (!validateInputs({name, value})) {
+      handleValidationError(name);
     }
   };
 
@@ -165,7 +136,7 @@ const AttendantForm = ({
             aria-describedby="nameError"
             data-testid="name"
             value={name}
-            onChange={handleChange}
+            onChange={handleNameChange}
             onBlur={handleBlur}
           />
         </div>
@@ -194,7 +165,7 @@ const AttendantForm = ({
             aria-describedby="lastNameError"
             data-testid="last-name"
             value={lastName}
-            onChange={handleChange}
+            onChange={handleLastNameChange}
             onBlur={handleBlur}
           />
         </div>
@@ -232,7 +203,7 @@ const AttendantForm = ({
               aria-describedby="jobTitleError"
               data-testid="job-title"
               value={jobTitle}
-              onChange={handleChange}
+              onChange={handleJobTitleChange}
               onBlur={handleBlur}
             >
               (
@@ -271,7 +242,7 @@ const AttendantForm = ({
             aria-describedby="ageError"
             data-testid="age"
             value={age}
-            onChange={handleChange}
+            onChange={handleAgeChange}
             onBlur={handleBlur}
           />
         </div>
@@ -295,24 +266,6 @@ const AttendantForm = ({
           </button>
         </div>
       </form>
-      {isAttendantsLoading && (
-        <div
-          className="loading-label"
-          aria-live="polite"
-          data-testid="attendants-loader"
-        >
-          Loading...
-        </div>
-      )}
-      {attendantsApiError && (
-        <div
-          className="error-label"
-          aria-live="assertive"
-        >
-          {attendantsApiError}
-        </div>
-      )}
-      {!attendantsApiError && renderAttendants()}
     </div>
   );
 };

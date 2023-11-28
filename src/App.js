@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import Attendant from "./components/Attendant";
 import AttendantForm from "./components/AttendantForm";
 import { getJobTitles, addAttendant, getAttendants } from "./api";
 import ErrorMessages from "./constants/errorMessages";
@@ -15,10 +16,7 @@ function App() {
   async function handleAddAttendant(newAttendant) {
     try {
       setIsAttendantsLoading(true);
-      const { status } = await addAttendant(newAttendant);
-      if (status !== 200) {
-        return;
-      }
+      await addAttendant(newAttendant);
     } catch (e) {
       setAttendantsApiError(ErrorMessages.FAILED_TO_SUBMIT_ATTENDANT);
     } finally {
@@ -64,8 +62,8 @@ function App() {
       age,
     };
 
-    handleAddAttendant(newAttendant);
-    handleFetchAttendants();
+    await handleAddAttendant(newAttendant);
+    await handleFetchAttendants();
   }
 
   useEffect(() => {
@@ -80,11 +78,32 @@ function App() {
         isAttendantsLoading={isAttendantsLoading}
         isJobTitlesLoading={isJobTitlesLoading}
         submitAttendant={submitAttendant}
-        attendants={attendants}
         jobTitles={jobTitles}
-        attendantsApiError={attendantsApiError}
         jobTitlesApiError={jobTitlesApiError}
       />
+      {isAttendantsLoading && (
+        <div
+          className="loading-label"
+          aria-live="polite"
+          data-testid="attendants-loader"
+        >
+          Loading...
+        </div>
+      )}
+      {attendantsApiError && (
+        <div
+          className="error-label"
+          aria-live="assertive"
+        >
+          {attendantsApiError}
+        </div>
+      )}
+      {attendants.map((attendant, index) => (
+      <Attendant
+        key={`attendant-${index}`}
+        attendant={attendant}
+      />
+    ))}
     </div>
   );
 }

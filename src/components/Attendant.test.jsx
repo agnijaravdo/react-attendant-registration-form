@@ -1,5 +1,5 @@
 import Attendant from "./Attendant";
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 
 describe("<Attendant />", () => {
   let props;
@@ -15,18 +15,8 @@ describe("<Attendant />", () => {
     };
   });
 
-  it("renders correctly on successful initial load", async () => {
+  it("renders component correctly when data is loaded", async () => {
     const { container } = render(<Attendant {...props} />);
-
     expect(container).toMatchSnapshot();
-  });
-
-  it("renders component with given props", async () => {
-    render(<Attendant {...props} />);
-
-    expect(await screen.findByText("John")).toBeInTheDocument();
-    expect(await screen.findByText("Doe")).toBeInTheDocument();
-    expect(await screen.findByText("Engineer")).toBeInTheDocument();
-    expect(await screen.findByText("40")).toBeInTheDocument();
   });
 });

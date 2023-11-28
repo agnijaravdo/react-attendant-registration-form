@@ -1,8 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Attendant /> renders correctly on successful initial load 1`] = `
+exports[`<Attendant /> renders component correctly when data is loaded 1`] = `
 <div>
-  <div>
+  <div
+    data-testid="attendant"
+  >
     <br />
     Name: 
     <span

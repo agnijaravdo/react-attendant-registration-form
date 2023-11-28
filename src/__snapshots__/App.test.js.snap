@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<App /> renders component correctly on successful initial load 1`] = `
+exports[`<App /> renders component correctly when data is loaded 1`] = `
 <div>
   <div
     class="center-text"

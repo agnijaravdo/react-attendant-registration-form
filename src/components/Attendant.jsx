@@ -1,5 +1,5 @@
 const Attendant = ({ attendant: { name, lastName, jobTitle, age } }) => (
-  <div>
+  <div data-testid="attendant">
     <br />
     Name: <span className="attendants-info">{name} </span>
     Last Name: <span className="attendants-info">{lastName} </span>
