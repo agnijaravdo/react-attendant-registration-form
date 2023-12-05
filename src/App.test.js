@@ -1,4 +1,9 @@
-import { render, screen, waitFor, waitForElementToBeRemoved } from "@testing-library/react";
+import {
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved,
+} from "@testing-library/react";
 import App from "./App";
 import * as api from "./api";
 import ErrorMessages from "./constants/errorMessages";
@@ -36,7 +41,9 @@ describe("<App />", () => {
     render(<App />);
 
     await waitFor(async () => {
-      expect(await screen.findByText(/2023 React Fundamentals Workshop/i)).toBeInTheDocument();
+      expect(
+        await screen.findByText(/2023 React Fundamentals Workshop/i),
+      ).toBeInTheDocument();
     });
   });
 
@@ -47,23 +54,25 @@ describe("<App />", () => {
     await waitFor(() => expect(getAttendants).toHaveBeenCalledTimes(1));
   });
 
-    it("renders attendants loader", async () => {
+  it("renders attendants loader", async () => {
     render(<App />);
 
     await waitFor(async () => {
-      expect(await screen.findByTestId("attendants-loader")).toBeInTheDocument();
+      expect(
+        await screen.findByTestId("attendants-loader"),
+      ).toBeInTheDocument();
     });
   });
 
   it("renders error message when get attendants API call fails", async () => {
     getAttendants.mockRejectedValue({ status: 500 });
-    render(<App/>);
+    render(<App />);
 
     await waitFor(() => {
       expect(
-        screen.getByText(ErrorMessages.FAILED_TO_GET_ATTENDANTS)
+        screen.getByText(ErrorMessages.FAILED_TO_GET_ATTENDANTS),
       ).toBeInTheDocument();
-    })
+    });
   });
 
   it("handles successful get attendants API call", async () => {
@@ -73,9 +82,9 @@ describe("<App />", () => {
     await waitFor(() => {
       expect(screen.getByText("John")).toBeInTheDocument();
     });
-  })
+  });
 
-   test("handles successful get job titles API call", async () => {
+  test("handles successful get job titles API call", async () => {
     getJobTitles.mockResolvedValue({ status: 200, data: jobTitles });
     render(<App />);
     await waitFor(() => {
@@ -86,22 +95,28 @@ describe("<App />", () => {
 
   it("renders error message when get job titles API call fails", async () => {
     getJobTitles.mockRejectedValue({ status: 500 });
-    render(<App/>);
+    render(<App />);
 
     await waitFor(() => {
       expect(
-        screen.getByText(ErrorMessages.FAILED_TO_GET_JOB_TITLES)
+        screen.getByText(ErrorMessages.FAILED_TO_GET_JOB_TITLES),
       ).toBeInTheDocument();
-    })
+    });
   });
 
   it("sorts attendants by age", async () => {
-    getAttendants.mockResolvedValue({ status: 200, data: [{ name: "John", age: 55 }, { name: "Julia", age: 25 }] });
+    getAttendants.mockResolvedValue({
+      status: 200,
+      data: [
+        { name: "John", age: 55 },
+        { name: "Julia", age: 25 },
+      ],
+    });
     render(<App />);
 
     const attendants = await screen.findAllByTestId("attendant");
 
     expect(attendants[0]).toHaveTextContent("Julia");
     expect(attendants[1]).toHaveTextContent("John");
-  })
+  });
 });

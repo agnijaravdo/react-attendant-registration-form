@@ -34,12 +34,7 @@ describe("<AttendantForm />", () => {
   });
 
   it("renders job title loader", async () => {
-    render(
-      <AttendantForm
-        {...props}
-        isJobTitlesLoading={true}
-      />
-    );
+    render(<AttendantForm {...props} isJobTitlesLoading={true} />);
 
     expect(screen.getByTestId("job-titles-loader")).toBeInTheDocument();
   });
@@ -49,11 +44,11 @@ describe("<AttendantForm />", () => {
       <AttendantForm
         {...props}
         jobTitlesApiError={[ErrorMessages.FAILED_TO_GET_JOB_TITLES]}
-      />
+      />,
     );
 
     expect(
-      screen.getByText(ErrorMessages.FAILED_TO_GET_JOB_TITLES)
+      screen.getByText(ErrorMessages.FAILED_TO_GET_JOB_TITLES),
     ).toBeInTheDocument();
   });
 
@@ -62,7 +57,7 @@ describe("<AttendantForm />", () => {
       <AttendantForm
         {...props}
         jobTitlesApiError={[ErrorMessages.FAILED_TO_GET_JOB_TITLES]}
-      />
+      />,
     );
 
     expect(screen.queryByTestId("job-title")).not.toBeInTheDocument();
@@ -94,7 +89,7 @@ describe("<AttendantForm />", () => {
 
     userEvent.type(screen.getByTestId("last-name"), "D");
     expect(
-      screen.getByText(ErrorMessages.INVALID_LAST_NAME)
+      screen.getByText(ErrorMessages.INVALID_LAST_NAME),
     ).toBeInTheDocument();
     expect(screen.getByTestId("submit")).toBeDisabled();
   });
@@ -106,7 +101,7 @@ describe("<AttendantForm />", () => {
     userEvent.click(screen.getByTestId("name"));
     await waitFor(() => {
       expect(
-        screen.getByText(ErrorMessages.INVALID_JOB_TITLE)
+        screen.getByText(ErrorMessages.INVALID_JOB_TITLE),
       ).toBeInTheDocument();
     });
 

@@ -18,12 +18,12 @@ const validateAgeInput = (value) => {
   const ageRegex = /^(1[5-9]|[2-9][0-9]|1[01][0-9]|120)$/;
 
   return !!value.match(ageRegex);
-}
+};
 
-const validateInputs = ({name, value}) => {
+const validateInputs = ({ name, value }) => {
   switch (name) {
     case "name":
-      return validateNameInput(value)
+      return validateNameInput(value);
     case "lastName":
       return validateLastNameInput(value);
     case "jobTitle":
@@ -33,6 +33,6 @@ const validateInputs = ({name, value}) => {
     default:
       throw new Error("Invalid input name");
   }
-} 
+};
 
 export { validateInputs };

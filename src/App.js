@@ -91,19 +91,13 @@ function App() {
         </div>
       )}
       {attendantsApiError && (
-        <div
-          className="error-label"
-          aria-live="assertive"
-        >
+        <div className="error-label" aria-live="assertive">
           {attendantsApiError}
         </div>
       )}
       {attendants.map((attendant, index) => (
-      <Attendant
-        key={`attendant-${index}`}
-        attendant={attendant}
-      />
-    ))}
+        <Attendant key={`attendant-${index}`} attendant={attendant} />
+      ))}
     </div>
   );
 }
