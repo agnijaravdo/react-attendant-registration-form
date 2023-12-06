@@ -4,14 +4,14 @@ import userEvent from "@testing-library/user-event";
 import ErrorMessages from "../constants/errorMessages";
 
 const fillAndSubmitForm = async () => {
-  await userEvent.type(screen.getByTestId("name"), "John");
-  await userEvent.type(screen.getByTestId("last-name"), "Doe");
+  await userEvent.type(screen.getByPlaceholderText("Name"), "John");
+  await userEvent.type(screen.getByPlaceholderText("Last Name"), "Doe");
   await userEvent.selectOptions(
     await screen.findByTestId("job-title"),
     "Engineer",
   );
-  await userEvent.type(screen.getByTestId("age"), "40");
-  await userEvent.click(screen.getByTestId("submit"));
+  await userEvent.type(screen.getByPlaceholderText("Age"), "40");
+  await userEvent.click(screen.getByText("Submit"));
 };
 
 describe("<AttendantForm />", () => {
@@ -30,14 +30,16 @@ describe("<AttendantForm />", () => {
   it("renders correctly when data is loaded", async () => {
     const { container } = render(<AttendantForm {...props} />);
 
-    expect(screen.queryByTestId("job-titles-loader")).not.toBeInTheDocument();
+    expect(
+      screen.queryByText("Loading job titles... 🔄"),
+    ).not.toBeInTheDocument();
     expect(container).toMatchSnapshot();
   });
 
   it("renders job title loader", async () => {
     render(<AttendantForm {...props} isJobTitlesLoading={true} />);
 
-    expect(screen.getByTestId("job-titles-loader")).toBeInTheDocument();
+    expect(screen.getByText("Loading job titles... 🔄")).toBeInTheDocument();
   });
 
   it("renders error message when get job titles API call fails", async () => {
@@ -59,7 +61,12 @@ describe("<AttendantForm />", () => {
       />,
     );
 
-    expect(screen.queryByTestId("job-title")).not.toBeInTheDocument();
+    expect(
+      screen.queryByText("Loading job titles... 🔄"),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByText("Please select a job title ⬇️"),
+    ).not.toBeInTheDocument();
   });
 
   it("clears all fields and disables button when clicking on submit button", async () => {
@@ -67,64 +74,64 @@ describe("<AttendantForm />", () => {
 
     fillAndSubmitForm();
     await waitFor(async () => {
-      expect(await screen.findByTestId("name")).toHaveValue("");
+      expect(await screen.findByPlaceholderText("Name")).toHaveValue("");
     });
-    expect(screen.getByTestId("last-name")).toHaveValue("");
+    expect(screen.getByPlaceholderText("Last Name")).toHaveValue("");
     expect(screen.getByTestId("job-title")).toHaveValue("");
-    expect(screen.queryByTestId("age").value).toBeFalsy();
-    expect(screen.getByTestId("submit")).toBeDisabled();
+    expect(screen.queryByPlaceholderText("Age").value).toBeFalsy();
+    expect(screen.getByText("Submit")).toBeDisabled();
   });
 
   it("shows validation error for invalid name input", async () => {
     render(<AttendantForm {...props} />);
 
-    userEvent.type(screen.getByTestId("name"), "John123");
+    userEvent.type(screen.getByPlaceholderText("Name"), "John123");
     expect(
       screen.getByText(
         "Please enter a valid name. It should be 2-50 characters long",
       ),
     ).toBeInTheDocument();
-    expect(screen.getByTestId("submit")).toBeDisabled();
+    expect(screen.getByText("Submit")).toBeDisabled();
   });
 
   it("shows validation error for invalid last name input", async () => {
     render(<AttendantForm {...props} />);
 
-    userEvent.type(screen.getByTestId("last-name"), "D");
+    userEvent.type(screen.getByPlaceholderText("Last Name"), "D");
     expect(
       screen.getByText(
         "Please enter a valid last name. It should be 2-50 characters long",
       ),
     ).toBeInTheDocument();
-    expect(screen.getByTestId("submit")).toBeDisabled();
+    expect(screen.getByText("Submit")).toBeDisabled();
   });
 
   it("shows validation error for empty job title when clicking outside", async () => {
     render(<AttendantForm {...props} />);
 
     userEvent.click(screen.getByTestId("job-title"));
-    userEvent.click(screen.getByTestId("name"));
+    userEvent.click(screen.getByPlaceholderText("Name"));
     expect(screen.getByText("Please select a job title")).toBeInTheDocument();
 
-    expect(screen.getByTestId("submit")).toBeDisabled();
+    expect(screen.getByText("Submit")).toBeDisabled();
   });
 
   it("shows validation error for invalid age", async () => {
     render(<AttendantForm {...props} />);
 
-    userEvent.type(screen.getByTestId("age"), "12");
+    userEvent.type(screen.getByPlaceholderText("Age"), "12");
     expect(
       screen.getByText("Please enter a valid age with range 15-120"),
     ).toBeInTheDocument();
 
-    expect(screen.getByTestId("submit")).toBeDisabled();
+    expect(screen.getByText("Submit")).toBeDisabled();
   });
 
   it("shows validation for empty job title when clicking outside", async () => {
     render(<AttendantForm {...props} />);
 
-    userEvent.click(screen.getByTestId("age"));
-    userEvent.click(screen.getByTestId("last-name"));
+    userEvent.click(screen.getByPlaceholderText("Age"));
+    userEvent.click(screen.getByPlaceholderText("Last Name"));
     expect(
       screen.getByText("Please enter a valid age with range 15-120"),
     ).toBeInTheDocument();

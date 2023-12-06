@@ -31,8 +31,10 @@ describe("<App />", () => {
   it("renders component correctly when data is loaded", async () => {
     const { container } = render(<App />);
 
-    await waitForElementToBeRemoved(screen.queryByTestId("job-titles-loader"));
-    expect(screen.queryByTestId("attendants-loader")).not.toBeInTheDocument();
+    await waitForElementToBeRemoved(
+      screen.queryByText("Loading job titles... 🔄"),
+    );
+    expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
     expect(container).toMatchSnapshot();
   });
 
@@ -57,9 +59,7 @@ describe("<App />", () => {
     render(<App />);
 
     await waitFor(async () => {
-      expect(
-        await screen.findByTestId("attendants-loader"),
-      ).toBeInTheDocument();
+      expect(await screen.findByText("Loading...")).toBeInTheDocument();
     });
   });
 
@@ -67,36 +67,32 @@ describe("<App />", () => {
     getAttendants.mockRejectedValue({ status: 500 });
     render(<App />);
 
-    await waitFor(() => {
-      expect(screen.getByText("Failed to get attendants")).toBeInTheDocument();
-    });
+    expect(
+      await screen.findByText("Failed to get attendants"),
+    ).toBeInTheDocument();
   });
 
   it("handles successful get attendants API call", async () => {
     getAttendants.mockResolvedValue({ status: 200, data: [{ name: "John" }] });
     render(<App />);
 
-    await waitFor(() => {
-      expect(screen.getByText("John")).toBeInTheDocument();
-    });
+    expect(await screen.findByText("John")).toBeInTheDocument();
   });
 
   test("handles successful get job titles API call", async () => {
     getJobTitles.mockResolvedValue({ status: 200, data: jobTitles });
     render(<App />);
-    await waitFor(() => {
-      expect(screen.getByText("Accountant")).toBeInTheDocument();
-    });
-    expect(screen.getByText("Engineer")).toBeInTheDocument();
+    expect(await screen.findByText("Accountant")).toBeInTheDocument();
+    expect(await screen.findByText("Engineer")).toBeInTheDocument();
   });
 
   it("renders error message when get job titles API call fails", async () => {
     getJobTitles.mockRejectedValue({ status: 500 });
     render(<App />);
 
-    await waitFor(() => {
-      expect(screen.getByText("Failed to get job titles")).toBeInTheDocument();
-    });
+    expect(
+      await screen.findByText("Failed to get job titles"),
+    ).toBeInTheDocument();
   });
 
   it("sorts attendants by age", async () => {
