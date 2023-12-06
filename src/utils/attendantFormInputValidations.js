@@ -20,7 +20,7 @@ const validateAgeInput = (value) => {
   return !!value.match(ageRegex);
 };
 
-const validateInputs = ({ name, value }) => {
+export const validateInputs = ({ name, value }) => {
   switch (name) {
     case "name":
       return validateNameInput(value);
@@ -34,5 +34,3 @@ const validateInputs = ({ name, value }) => {
       throw new Error("Invalid input name");
   }
 };
-
-export { validateInputs };

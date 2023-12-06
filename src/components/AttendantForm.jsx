@@ -26,7 +26,7 @@ const AttendantForm = ({
 
   async function handleSubmit(e) {
     e.preventDefault();
-    await submitAttendant({ ...formInputs });
+    await submitAttendant(formInputs);
     clearForm();
   }
 
@@ -66,43 +66,13 @@ const AttendantForm = ({
     }
   };
 
-  const handleNameChange = (e) => {
+  const handleFieldChange = (e, field, errorKey) => {
     const { value } = e.target;
-    setFormInputs({ ...formInputs, name: value });
-    if (!validateInputs({ name: "name", value })) {
-      handleValidationError("name");
+    setFormInputs({ ...formInputs, [field]: value });
+    if (!validateInputs({ name: field, value })) {
+      handleValidationError(field);
     } else {
-      setFormErrors({ ...formErrors, nameError: "" });
-    }
-  };
-
-  const handleLastNameChange = (e) => {
-    const { value } = e.target;
-    setFormInputs({ ...formInputs, lastName: value });
-    if (!validateInputs({ name: "lastName", value })) {
-      handleValidationError("lastName");
-    } else {
-      setFormErrors({ ...formErrors, lastNameError: "" });
-    }
-  };
-
-  const handleJobTitleChange = (e) => {
-    const { value } = e.target;
-    setFormInputs({ ...formInputs, jobTitle: value });
-    if (!validateInputs({ name: "jobTitle", value })) {
-      handleValidationError("jobTitle");
-    } else {
-      setFormErrors({ ...formErrors, jobTitleError: "" });
-    }
-  };
-
-  const handleAgeChange = (e) => {
-    const { value } = e.target;
-    setFormInputs({ ...formInputs, age: value });
-    if (!validateInputs({ name: "age", value })) {
-      handleValidationError("age");
-    } else {
-      setFormErrors({ ...formErrors, ageError: "" });
+      setFormErrors({ ...formErrors, [errorKey]: "" });
     }
   };
 
@@ -142,7 +112,7 @@ const AttendantForm = ({
             aria-describedby="nameError"
             data-testid="name"
             value={name}
-            onChange={handleNameChange}
+            onChange={(e) => handleFieldChange(e, "name", "nameError")}
             onBlur={handleBlur}
           />
         </div>
@@ -165,7 +135,7 @@ const AttendantForm = ({
             aria-describedby="lastNameError"
             data-testid="last-name"
             value={lastName}
-            onChange={handleLastNameChange}
+            onChange={(e) => handleFieldChange(e, "lastName", "lastNameError")}
             onBlur={handleBlur}
           />
         </div>
@@ -197,7 +167,9 @@ const AttendantForm = ({
               aria-describedby="jobTitleError"
               data-testid="job-title"
               value={jobTitle}
-              onChange={handleJobTitleChange}
+              onChange={(e) =>
+                handleFieldChange(e, "jobTitle", "jobTitleError")
+              }
               onBlur={handleBlur}
             >
               (
@@ -227,7 +199,7 @@ const AttendantForm = ({
             aria-describedby="ageError"
             data-testid="age"
             value={age}
-            onChange={handleAgeChange}
+            onChange={(e) => handleFieldChange(e, "age", "ageError")}
             onBlur={handleBlur}
           />
         </div>

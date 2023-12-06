@@ -3,14 +3,15 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ErrorMessages from "../constants/errorMessages";
 
-const jobTitles = ["Accountant", "Engineer", "Lawyer", "Teacher"];
-
 const fillAndSubmitForm = async () => {
-  userEvent.type(screen.getByTestId("name"), "John");
-  userEvent.type(screen.getByTestId("last-name"), "Doe");
-  userEvent.selectOptions(await screen.findByTestId("job-title"), "Engineer");
-  userEvent.type(screen.getByTestId("age"), "40");
-  userEvent.click(screen.getByTestId("submit"));
+  await userEvent.type(screen.getByTestId("name"), "John");
+  await userEvent.type(screen.getByTestId("last-name"), "Doe");
+  await userEvent.selectOptions(
+    await screen.findByTestId("job-title"),
+    "Engineer",
+  );
+  await userEvent.type(screen.getByTestId("age"), "40");
+  await userEvent.click(screen.getByTestId("submit"));
 };
 
 describe("<AttendantForm />", () => {
@@ -21,7 +22,7 @@ describe("<AttendantForm />", () => {
       isAttendantsLoading: false,
       isJobTitlesLoading: false,
       submitAttendant: jest.fn(),
-      jobTitles: jobTitles,
+      jobTitles: ["Accountant", "Engineer", "Lawyer", "Teacher"],
       jobTitlesApiError: null,
     };
   });
@@ -43,20 +44,18 @@ describe("<AttendantForm />", () => {
     render(
       <AttendantForm
         {...props}
-        jobTitlesApiError={[ErrorMessages.FAILED_TO_GET_JOB_TITLES]}
+        jobTitlesApiError={ErrorMessages.FAILED_TO_GET_JOB_TITLES}
       />,
     );
 
-    expect(
-      screen.getByText(ErrorMessages.FAILED_TO_GET_JOB_TITLES),
-    ).toBeInTheDocument();
+    expect(screen.getByText("Failed to get job titles")).toBeInTheDocument();
   });
 
   it("does not render select job title dropdown when get job titles API call fails", () => {
     render(
       <AttendantForm
         {...props}
-        jobTitlesApiError={[ErrorMessages.FAILED_TO_GET_JOB_TITLES]}
+        jobTitlesApiError={ErrorMessages.FAILED_TO_GET_JOB_TITLES}
       />,
     );
 
@@ -80,7 +79,11 @@ describe("<AttendantForm />", () => {
     render(<AttendantForm {...props} />);
 
     userEvent.type(screen.getByTestId("name"), "John123");
-    expect(screen.getByText(ErrorMessages.INVALID_NAME)).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "Please enter a valid name. It should be 2-50 characters long",
+      ),
+    ).toBeInTheDocument();
     expect(screen.getByTestId("submit")).toBeDisabled();
   });
 
@@ -89,7 +92,9 @@ describe("<AttendantForm />", () => {
 
     userEvent.type(screen.getByTestId("last-name"), "D");
     expect(
-      screen.getByText(ErrorMessages.INVALID_LAST_NAME),
+      screen.getByText(
+        "Please enter a valid last name. It should be 2-50 characters long",
+      ),
     ).toBeInTheDocument();
     expect(screen.getByTestId("submit")).toBeDisabled();
   });
@@ -99,11 +104,7 @@ describe("<AttendantForm />", () => {
 
     userEvent.click(screen.getByTestId("job-title"));
     userEvent.click(screen.getByTestId("name"));
-    await waitFor(() => {
-      expect(
-        screen.getByText(ErrorMessages.INVALID_JOB_TITLE),
-      ).toBeInTheDocument();
-    });
+    expect(screen.getByText("Please select a job title")).toBeInTheDocument();
 
     expect(screen.getByTestId("submit")).toBeDisabled();
   });
@@ -112,9 +113,9 @@ describe("<AttendantForm />", () => {
     render(<AttendantForm {...props} />);
 
     userEvent.type(screen.getByTestId("age"), "12");
-    await waitFor(() => {
-      expect(screen.getByText(ErrorMessages.INVALID_AGE)).toBeInTheDocument();
-    });
+    expect(
+      screen.getByText("Please enter a valid age with range 15-120"),
+    ).toBeInTheDocument();
 
     expect(screen.getByTestId("submit")).toBeDisabled();
   });
@@ -124,9 +125,9 @@ describe("<AttendantForm />", () => {
 
     userEvent.click(screen.getByTestId("age"));
     userEvent.click(screen.getByTestId("last-name"));
-    await waitFor(() => {
-      expect(screen.getByText(ErrorMessages.INVALID_AGE)).toBeInTheDocument();
-    });
+    expect(
+      screen.getByText("Please enter a valid age with range 15-120"),
+    ).toBeInTheDocument();
   });
 
   it("calls submitAttendant function with correct arguments", async () => {

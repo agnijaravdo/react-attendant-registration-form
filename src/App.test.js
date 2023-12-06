@@ -6,7 +6,6 @@ import {
 } from "@testing-library/react";
 import App from "./App";
 import * as api from "./api";
-import ErrorMessages from "./constants/errorMessages";
 
 const jobTitles = ["Accountant", "Engineer", "Lawyer", "Teacher"];
 
@@ -69,9 +68,7 @@ describe("<App />", () => {
     render(<App />);
 
     await waitFor(() => {
-      expect(
-        screen.getByText(ErrorMessages.FAILED_TO_GET_ATTENDANTS),
-      ).toBeInTheDocument();
+      expect(screen.getByText("Failed to get attendants")).toBeInTheDocument();
     });
   });
 
@@ -98,9 +95,7 @@ describe("<App />", () => {
     render(<App />);
 
     await waitFor(() => {
-      expect(
-        screen.getByText(ErrorMessages.FAILED_TO_GET_JOB_TITLES),
-      ).toBeInTheDocument();
+      expect(screen.getByText("Failed to get job titles")).toBeInTheDocument();
     });
   });
 
