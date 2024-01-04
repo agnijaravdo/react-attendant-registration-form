@@ -30,5 +30,5 @@ Each Component has unit tests using jest and react-testing-library.
 
 ## Visuals:
 
-![Main form](./assets/mainForm.png)
-![Attendants dat and form fields validation](./assets/attendantsDataAndValidations.png)
+<img src="./assets/mainForm.png" width="500" alt="Main form">
+<img src="./assets/attendantsDataAndValidations.png" width="500" alt="Attendants data and form fields validation">
