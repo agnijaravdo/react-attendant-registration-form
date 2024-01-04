@@ -1,3 +1,69 @@
 .center-text {
   text-align: center;
 }
+
+.attendants-info {
+  color: #557c55;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+body {
+  background-color: #f2ffe9;
+}
+
+.form-container {
+  max-width: 600px;
+  margin: 10px auto;
+  padding: 20px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  background-color: #b2c8ba;
+  border-radius: 8px;
+}
+
+.form-label {
+  display: block;
+  margin-left: 150px;
+  text-align: left;
+  color: #2c3345;
+}
+
+.input-box {
+  width: 300px;
+  height: 45px;
+  padding: 10px 12px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.submit-button {
+  width: 180px;
+  padding: 10px 15px;
+  background-color: #79ac78;
+  color: white;
+  cursor: pointer;
+  border: none;
+  font-size: 18px;
+  border-radius: 4px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.submit-button:disabled {
+  background-color: #b4b4b3;
+  color: white;
+  cursor: not-allowed;
+}
+
+.loading-label {
+  color: #2c3345;
+  font-size: 16px;
+}
+
+.error-label {
+  color: #b33030;
+  font-size: 16px;
+}

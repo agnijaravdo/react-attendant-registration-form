@@ -1,0 +1,136 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<App /> renders component correctly when data is loaded 1`] = `
+<div>
+  <div
+    class="center-text"
+  >
+    <h1>
+      2023 React Fundamentals Workshop
+    </h1>
+    <div>
+      <h2>
+        Attendant Registration Form
+      </h2>
+      <form
+        class="form-container"
+      >
+        <div>
+          <label
+            class="form-label"
+            for="name"
+          >
+            Name
+          </label>
+          <input
+            aria-describedby="nameError"
+            aria-required="true"
+            class="input-box"
+            data-testid="name"
+            name="name"
+            placeholder="Name"
+            type="text"
+            value=""
+          />
+        </div>
+        <br />
+        <div>
+          <label
+            class="form-label"
+            for="lastName"
+          >
+            Last name
+          </label>
+          <input
+            aria-describedby="lastNameError"
+            aria-required="true"
+            class="input-box"
+            data-testid="last-name"
+            name="lastName"
+            placeholder="Last Name"
+            type="text"
+            value=""
+          />
+        </div>
+        <br />
+        <div>
+          <label
+            class="form-label"
+            for="jobTitle"
+          >
+            Job title
+          </label>
+          <select
+            aria-describedby="jobTitleError"
+            aria-required="true"
+            class="input-box"
+            data-testid="job-title"
+            name="jobTitle"
+          >
+            (
+            <option
+              disabled=""
+              value=""
+            >
+              Please select a job title ⬇️
+            </option>
+            )
+            <option
+              value="Accountant"
+            >
+              Accountant
+            </option>
+            <option
+              value="Engineer"
+            >
+              Engineer
+            </option>
+            <option
+              value="Lawyer"
+            >
+              Lawyer
+            </option>
+            <option
+              value="Teacher"
+            >
+              Teacher
+            </option>
+          </select>
+        </div>
+        <br />
+        <div
+          class="input"
+        >
+          <label
+            class="form-label"
+            for="age"
+          >
+            Age
+          </label>
+          <input
+            aria-describedby="ageError"
+            aria-required="true"
+            class="input-box"
+            data-testid="age"
+            name="age"
+            placeholder="Age"
+            type="number"
+            value=""
+          />
+        </div>
+        <br />
+        <div>
+          <button
+            class="submit-button"
+            data-testid="submit"
+            disabled=""
+            type="submit"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+`;
