@@ -11,6 +11,10 @@ Each Component has unit tests using jest and react-testing-library.
 1. `npm i`
 2. `npm start`
 
+## To run tests
+
+1. `npm test`
+
 ## Tasks
 
 - [x] Create an attendant form which has the following fields:
